@@ -1,0 +1,64 @@
+
+git pull - Att man hämtar ändringar från remote repository och mergear med sin lokala branch
+git push - Att man skickar sina lokala commits till remote repository
+
+git status - Visar aktuell status för sitt repository, bla vilka filer som är i staging area, vilka filer som är ändrade etc.
+git log - Visar historiken över sina commits.
+
+Rulla tillbaks koden till ett tidigare tillstånd:
+Skapade en separat branch för att testa detta.
+
+1. git restore
+används för att återställa ändringar i en fil som inte commitats, och det används när man vill återgå till den senaste commitade versionen.
+
+test:
+skapade en kommentar i GuessingGame.java
+gjorde sedan:
+git restore GuessingGame.java
+git status
+
+resultat: GuessingGame.java försvann från listan över modifierade filer i git status och återställdes till senaste commit.
+
+2. git revert
+skapar en ny commit som inverterar en tidigare commit,  och används när jag vill ångra en commit utan att skriva om historiken.
+
+test:
+skapa test.txt och körde add/commit.
+gjorde sendan:
+git log --oneline -3
+git revert c5b484b
+text editor öppnades -> spara som den var
+git log --oneline -3
+git status
+
+Output:
+
+4d13e55 Revert "add test file"
+c5b484b add test file
+4052bfa added script
+
+resultat: test.txt togs bort och en ny commit skapades.
+
+3. git reset
+används för att ångra commits, när man tex vill ångra sin senaste loakala commits men behålla ändringar för att göra en ny commit
+(förutom vid flaggan hard som återställer både staging area och arbetskatalog till vald commit).
+
+test:
+skapade test.txt
+gjorde git add/git commit -m "test git reset"
+git reset --soft HEAD~1
+git log --oneline -3
+git status
+
+Output från git log:
+
+4d13e55 (HEAD -> testerbranch) Revert "add test file"
+c5b484b add test file
+4052bfa (origin/main, main) added script
+
+Output från git status:
+
+Changes to be committed:
+    new file: test.txt
+
+resultat: commiten försvann från branchens aktuella historik, men filen låg kvar i staging area.
