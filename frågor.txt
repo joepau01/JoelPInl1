@@ -1,4 +1,4 @@
-
+Siktar på VG!
 git pull - Att man hämtar ändringar från remote repository och mergear med sin lokala branch
 git push - Att man skickar sina lokala commits till remote repository
 
